@@ -1348,6 +1348,14 @@
         padding: 12px 18px;
         width: 100%;
         border-radius: 10px;
+        display: block;
+        position: relative;
+        z-index: 1060;
+      }
+
+      .nav-center li {
+        width: 100%;
+        list-style: none;
       }
 
       .nav-right { display: none; }
@@ -1434,10 +1442,10 @@
   <nav class="navbar" id="navbar">
     <div class="nav-logo" onclick="switchSection('home')">Jiaxin<span class="dot">.</span></div>
     <ul class="nav-center" id="navLinks">
-      <li><a class="active" data-section="home" onclick="switchSection('home')">首页</a></li>
-      <li><a data-section="experience" onclick="switchSection('experience')">工作经历</a></li>
-      <li><a data-section="education" onclick="switchSection('education')">教育背景</a></li>
-      <li><a data-section="skills" onclick="switchSection('skills')">技能特长</a></li>
+      <li><a class="active" data-section="home" href="javascript:void(0)" onclick="switchSection('home')">首页</a></li>
+      <li><a data-section="experience" href="javascript:void(0)" onclick="switchSection('experience')">工作经历</a></li>
+      <li><a data-section="education" href="javascript:void(0)" onclick="switchSection('education')">教育背景</a></li>
+      <li><a data-section="skills" href="javascript:void(0)" onclick="switchSection('skills')">技能特长</a></li>
       <li><a href="https://wondrous-arithmetic-57d227.netlify.app/" target="_blank">作品集</a></li>
     </ul>
     <div class="nav-right">
