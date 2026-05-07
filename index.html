@@ -1468,7 +1468,6 @@
     </div>
   </nav>
 
-  <div class="nav-overlay" id="navOverlay" onclick="closeMobileMenu()"></div>
 
   <!-- ==================== 主内容 ==================== -->
   <main class="main-content">
@@ -1942,15 +1941,14 @@
         }
       });
 
-      // 同时绑定 touchend 事件，确保移动端触摸响应
-      navLinks.addEventListener('touchend', function(e) {
-        var link = e.target.closest('a');
-        if (!link) return;
-        var section = link.getAttribute('data-section');
-        if (section) {
-          e.preventDefault();
-          e.stopPropagation();
-          switchSection(section);
+        // 点击页面其他区域关闭菜单
+      document.addEventListener('touchstart', function(e) {
+        var navLinks = document.getElementById('navLinks');
+        var hamburger = document.getElementById('hamburger');
+        if (navLinks.classList.contains('open')) {
+          if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+            closeMobileMenu();
+          }
         }
       });
     }
@@ -1993,20 +1991,16 @@
     function toggleMobileMenu() {
       var navLinks = document.getElementById('navLinks');
       var hamburger = document.getElementById('hamburger');
-      var overlay = document.getElementById('navOverlay');
       navLinks.classList.toggle('open');
       hamburger.classList.toggle('open');
-      overlay.classList.toggle('show');
       document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
     }
 
     function closeMobileMenu() {
       var navLinks = document.getElementById('navLinks');
       var hamburger = document.getElementById('hamburger');
-      var overlay = document.getElementById('navOverlay');
       navLinks.classList.remove('open');
       hamburger.classList.remove('open');
-      overlay.classList.remove('show');
       document.body.style.overflow = '';
     }
 
