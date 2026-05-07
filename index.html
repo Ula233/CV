@@ -1330,6 +1330,7 @@
         width: 72%;
         max-width: 280px;
         height: 100vh;
+        height: 100dvh;
         background: rgba(250, 247, 242, 0.98);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
@@ -1339,9 +1340,18 @@
         transition: right 0.3s ease;
         border-left: 1px solid rgba(0,0,0,0.05);
         z-index: 1050;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
 
       .nav-center.open { right: 0; }
+
+      .nav-center li {
+        width: 100%;
+        list-style: none;
+        position: relative;
+        z-index: 1060;
+      }
 
       .nav-center a {
         font-size: 0.95rem;
@@ -1351,11 +1361,8 @@
         display: block;
         position: relative;
         z-index: 1060;
-      }
-
-      .nav-center li {
-        width: 100%;
-        list-style: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+        touch-action: manipulation;
       }
 
       .nav-right { display: none; }
@@ -1445,10 +1452,10 @@
   <nav class="navbar" id="navbar">
     <div class="nav-logo" onclick="switchSection('home')">Jiaxin<span class="dot">.</span></div>
     <ul class="nav-center" id="navLinks">
-      <li><a class="active" data-section="home" href="javascript:void(0)" onclick="switchSection('home')">首页</a></li>
-      <li><a data-section="experience" href="javascript:void(0)" onclick="switchSection('experience')">工作经历</a></li>
-      <li><a data-section="education" href="javascript:void(0)" onclick="switchSection('education')">教育背景</a></li>
-      <li><a data-section="skills" href="javascript:void(0)" onclick="switchSection('skills')">技能特长</a></li>
+      <li><a class="active" data-section="home" href="javascript:void(0)">首页</a></li>
+      <li><a data-section="experience" href="javascript:void(0)">工作经历</a></li>
+      <li><a data-section="education" href="javascript:void(0)">教育背景</a></li>
+      <li><a data-section="skills" href="javascript:void(0)">技能特长</a></li>
       <li><a href="https://wondrous-arithmetic-57d227.netlify.app/" target="_blank">作品集</a></li>
     </ul>
     <div class="nav-right">
@@ -1915,7 +1922,37 @@
         lucide.createIcons();
       }
       probeAvatar();
+      initNavLinks();
     });
+
+    /**
+     * 使用事件委托绑定导航链接点击（解决移动端 onclick 不响应的问题）
+     */
+    function initNavLinks() {
+      var navLinks = document.getElementById('navLinks');
+      navLinks.addEventListener('click', function(e) {
+        var link = e.target.closest('a');
+        if (!link) return;
+        var section = link.getAttribute('data-section');
+        if (section) {
+          e.preventDefault();
+          e.stopPropagation();
+          switchSection(section);
+        }
+      });
+
+      // 同时绑定 touchend 事件，确保移动端触摸响应
+      navLinks.addEventListener('touchend', function(e) {
+        var link = e.target.closest('a');
+        if (!link) return;
+        var section = link.getAttribute('data-section');
+        if (section) {
+          e.preventDefault();
+          e.stopPropagation();
+          switchSection(section);
+        }
+      });
+    }
 
     /**
      * 栏目切换逻辑
